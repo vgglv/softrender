@@ -1,8 +1,22 @@
 #include "CoreApp.hpp"
 #include <algorithm>
+#include <cassert>
+#include "render/Rectangle.hpp"
+
+namespace {
+	core::CoreApp* myInstance = nullptr;
+}
 
 namespace core {
-	CoreApp::CoreApp() : _width(800), _height(800), _framebufferVector(_width * _height) {}
+	CoreApp* CoreApp::instance() {
+		assert(myInstance != nullptr);
+		return myInstance;
+	}
+
+	CoreApp::CoreApp() : _width(800), _height(800), _framebufferVector(_width * _height) {
+		assert(myInstance == nullptr);
+		myInstance = this;
+	}
 
 	CoreApp::~CoreApp() = default;
 
@@ -16,9 +30,16 @@ namespace core {
 		//	};
 		//	clear(random_uint32());
 		clear(0xFFFF0000);
+
+		common::Vector2 size = {100, 100};
+		common::Vector2 pos = {
+			.x = ((float)getWidth() / 2.f) - (size.x / 2.f),
+			.y = ((float)getHeight() / 2.f) - (size.y / 2.f)
+		};
+		render::Rectangle::draw(pos, size, 0xFF0000FF);
 	}
 
-	const uint32_t* CoreApp::getFramebuffer() const {
+	uint32_t* CoreApp::getFramebuffer() {
 		return _framebufferVector.data();
 	}
 

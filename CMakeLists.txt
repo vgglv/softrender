@@ -7,7 +7,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 #TODO: move this to if (APPLE) or some shit
 add_executable(${PROJECT_NAME} src/platform/osx/main.mm)
 
-file(GLOB_RECURSE SOURCES "src/core/*.*")
+file(GLOB_RECURSE SOURCES 
+	"src/core/*.*"
+	"src/common/*.*"
+	"src/render/*.*"
+)
 
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "src/")

@@ -9,11 +9,13 @@ namespace core {
 
 		void clear(uint32_t color);
 		void render();
-		const uint32_t* getFramebuffer() const;
+		uint32_t* getFramebuffer();
 		int getWidth() const;
 		int getHeight() const;
 		void setWidth(int width);
 		void setHeight(int height);
+
+		static CoreApp* instance();
 
 	private:
 		int _width;
