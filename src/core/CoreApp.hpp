@@ -8,7 +8,7 @@ namespace core {
 		~CoreApp();
 
 		void clear(uint32_t color);
-		void update(float dt);
+		void update();
 		uint32_t* getFramebuffer();
 		int getWidth() const;
 		int getHeight() const;

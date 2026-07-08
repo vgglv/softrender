@@ -10,11 +10,6 @@ namespace state {
 	void StateMachine::update(float dt) {
 		switch (currentState) {
 			case GameState::TITLE_SCREEN: {
-				//	auto random_uint32 = []() -> uint32_t {
-				//		return ((uint32_t)random() << 16) ^ (uint32_t)random();
-				//	};
-				//	clear(random_uint32());
-
 				float width = (float)core::CoreApp::instance()->getWidth();
 				float height = (float)core::CoreApp::instance()->getHeight();
 				common::Vector2 size = {100, 100};
