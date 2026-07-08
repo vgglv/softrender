@@ -8,9 +8,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 add_executable(${PROJECT_NAME} src/platform/osx/main.mm)
 
 file(GLOB_RECURSE SOURCES 
-	"src/core/*.*"
 	"src/common/*.*"
+	"src/core/*.*"
 	"src/render/*.*"
+	"src/state/*.*"
 )
 
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})

@@ -1,6 +1,6 @@
 #pragma once
+#include <cstdint>
 
-#include <vector>
 namespace core {
 	class CoreApp {
 	public:
@@ -8,7 +8,7 @@ namespace core {
 		~CoreApp();
 
 		void clear(uint32_t color);
-		void render();
+		void update(float dt);
 		uint32_t* getFramebuffer();
 		int getWidth() const;
 		int getHeight() const;
@@ -18,10 +18,7 @@ namespace core {
 		static CoreApp* instance();
 
 	private:
-		int _width;
-		int _height;
-
-		//AARRGGBB
-		std::vector<uint32_t> _framebufferVector;
+		struct Impl;
+		Impl* d = nullptr;
 	};
 }

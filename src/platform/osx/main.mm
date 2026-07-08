@@ -1,5 +1,6 @@
 #include <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
+#include <chrono>
 
 #include "core/CoreApp.hpp"
 
@@ -37,12 +38,14 @@
 
 @implementation SoftwareView
 core::CoreApp* _app;
+std::chrono::steady_clock::time_point _lastTime;
 
 - (instancetype)initWithFrame:(NSRect)frame {
 	self = [super initWithFrame:frame];
 
 	if (self) {
 		_app = new core::CoreApp();
+		_lastTime = std::chrono::steady_clock::now();
 
 		[NSTimer scheduledTimerWithTimeInterval:1.0 / 60.0 target:self selector:@selector(redraw) userInfo:nil repeats:YES];
 	}
@@ -56,12 +59,14 @@ core::CoreApp* _app;
 }
 
 - (void)redraw {
+	auto now = std::chrono::steady_clock::now();
+	float dt = std::chrono::duration<float>(now - _lastTime).count();
+	_lastTime = now;
+	_app->update(dt);
 	[self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-	_app->render();
-
 	const uint32_t* pixels = _app->getFramebuffer();
 
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
