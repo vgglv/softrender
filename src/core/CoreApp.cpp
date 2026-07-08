@@ -1,5 +1,4 @@
 #include "CoreApp.hpp"
-#include "render/Rectangle.hpp"
 #include "state/StateMachine.hpp"
 #include <algorithm>
 #include <cassert>

@@ -8,8 +8,11 @@ namespace state {
 		~StateMachine();
 
 		void update(float dt);
+		void setState(GameState state);
+		static StateMachine* instance();
 
 	private:
-		GameState currentState = GameState::TITLE_SCREEN;
+		struct Impl;
+		Impl* d = nullptr;
 	};
 }

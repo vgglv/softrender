@@ -1,24 +1,51 @@
 #include "StateMachine.hpp"
 #include "render/Rectangle.hpp"
 #include "core/CoreApp.hpp"
+#include "GameState.hpp"
+#include "scenes/TitleScene.hpp"
+#include <memory>
+#include <cassert>
+
+namespace {
+	state::StateMachine* myInstance = nullptr;
+}
 
 namespace state {
-	StateMachine::StateMachine() = default;
+	struct StateMachine::Impl {
+		GameState currentState = GameState::TITLE_SCREEN;
 
-	StateMachine::~StateMachine() = default;
+		std::unique_ptr<scenes::TitleScene> titleScene = nullptr;
+	};
+
+	StateMachine* StateMachine::instance() {
+		assert(myInstance != nullptr);
+		return myInstance;
+	}
+
+	StateMachine::StateMachine() : d(new Impl()) {
+		assert(myInstance == nullptr);
+		myInstance = this;
+	}
+
+	StateMachine::~StateMachine() {
+		delete d;
+	}
+
+	void StateMachine::setState(GameState state) {
+		d->currentState = state;
+	}
 
 	void StateMachine::update(float dt) {
-		switch (currentState) {
+		switch (d->currentState) {
 			case GameState::TITLE_SCREEN: {
-				float width = (float)core::CoreApp::instance()->getWidth();
-				float height = (float)core::CoreApp::instance()->getHeight();
-				common::Vector2 size = {100, 100};
-				common::Vector2 pos = {.x = (width / 2.f) - (size.x / 2.f), .y = (height / 2.f) - (size.y / 2.f)};
-				render::Rectangle::draw(pos, size, 0xFF0000FF);
+				d->titleScene = std::make_unique<scenes::TitleScene>();
+				d->currentState = GameState::TITLE_SCREEN_WAIT;
 			} break;
 			case GameState::TITLE_SCREEN_WAIT:
+				d->titleScene->update(dt);
 				break;
 			case GameState::MAIN_MENU_IN:
+				d->titleScene.reset();
 				break;
 			case GameState::MAIN_MENU:
 				break;
