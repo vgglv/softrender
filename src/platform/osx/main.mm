@@ -1,7 +1,10 @@
 #include <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
 
+#include <cstddef>
+
 #include "core/CoreApp.hpp"
+#include "render/Framebuffer.hpp"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 @end
@@ -24,7 +27,7 @@
 	[window makeKeyAndOrderFront:nil];
 	[window setReleasedWhenClosed:NO];
 	SoftwareView* view = [[SoftwareView alloc] initWithFrame:frame];
-	[window setContentView: view];
+	[window setContentView:view];
 
 	[NSApp activateIgnoringOtherApps:YES];
 }
@@ -60,13 +63,16 @@ core::CoreApp* _app;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-	const uint32_t* pixels = _app->getFramebuffer();
+	render::Framebuffer* framebuffer = render::Framebuffer::instance();
+	const uint32_t* pixels = framebuffer->getPixels();
 
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
 	CGContextRef ctx = [[NSGraphicsContext currentContext] CGContext];
 
-	CGDataProviderRef provider = CGDataProviderCreateWithData(nullptr, pixels, _app->getWidth() * _app->getHeight() * 4, nullptr);
+	size_t pixelsSize = static_cast<long>(framebuffer->width() * framebuffer->height()) * 4;
+
+	CGDataProviderRef provider = CGDataProviderCreateWithData(nullptr, pixels, pixelsSize, nullptr);
 
 	CGImageRef image = CGImageCreate(_app->getWidth(), _app->getHeight(), 8, 32, _app->getWidth() * 4, colorSpace, kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little, provider, nullptr,
 		false, kCGRenderingIntentDefault);

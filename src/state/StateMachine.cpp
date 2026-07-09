@@ -3,6 +3,7 @@
 #include "core/CoreApp.hpp"
 #include "GameState.hpp"
 #include "scenes/TitleScene.hpp"
+#include "scenes/MainMenuScene.hpp"
 #include <memory>
 #include <cassert>
 
@@ -15,6 +16,7 @@ namespace state {
 		GameState currentState = GameState::TITLE_SCREEN;
 
 		std::unique_ptr<scenes::TitleScene> titleScene = nullptr;
+		std::unique_ptr<scenes::MainMenuScene> mainMenuScene = nullptr;
 	};
 
 	StateMachine* StateMachine::instance() {
@@ -46,8 +48,11 @@ namespace state {
 				break;
 			case GameState::MAIN_MENU_IN:
 				d->titleScene.reset();
+				d->mainMenuScene = std::make_unique<scenes::MainMenuScene>();
+				d->currentState = GameState::MAIN_MENU;
 				break;
 			case GameState::MAIN_MENU:
+				d->mainMenuScene->update(dt);
 				break;
 			case GameState::MAIN_MENU_OUT:
 				break;

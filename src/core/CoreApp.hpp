@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 
 namespace core {
 	class CoreApp {
@@ -7,9 +6,7 @@ namespace core {
 		CoreApp();
 		~CoreApp();
 
-		void clear(uint32_t color);
 		void update();
-		uint32_t* getFramebuffer();
 		int getWidth() const;
 		int getHeight() const;
 		void setWidth(int width);

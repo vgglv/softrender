@@ -1,6 +1,7 @@
 #include "TitleScene.hpp"
 #include "core/CoreApp.hpp"
 #include "common/Vector2.hpp"
+#include "render/Framebuffer.hpp"
 #include "render/Rectangle.hpp"
 #include "state/GameState.hpp"
 #include "state/StateMachine.hpp"
@@ -18,6 +19,7 @@ namespace scenes {
 	}
 
 	void TitleScene::update(float dt) {
+		render::Framebuffer::instance()->clear(0xFF000000);
 		float width = (float)core::CoreApp::instance()->getWidth();
 		float height = (float)core::CoreApp::instance()->getHeight();
 		common::Vector2 size = {100, 100};
