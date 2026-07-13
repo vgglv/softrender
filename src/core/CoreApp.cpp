@@ -24,11 +24,11 @@ namespace core {
 		return myInstance;
 	}
 
-	CoreApp::CoreApp() : d(new Impl()) {
+	CoreApp::CoreApp(int width, int height) : d(new Impl()) {
 		assert(myInstance == nullptr);
 		d->lastTime = std::chrono::steady_clock::now();
-		d->width = 800;
-		d->height = 800;
+		d->width = width;
+		d->height = height;
 		d->stateMachine = std::make_unique<state::StateMachine>();
 		d->framebuffer = std::make_unique<render::Framebuffer>(d->width, d->height);
 		myInstance = this;
@@ -39,7 +39,6 @@ namespace core {
 	}
 
 	void CoreApp::update() {
-
 		auto now = std::chrono::steady_clock::now();
 		float dt = std::chrono::duration<float>(now - d->lastTime).count();
 		d->lastTime = now;

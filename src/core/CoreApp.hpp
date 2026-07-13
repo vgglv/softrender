@@ -3,7 +3,7 @@
 namespace core {
 	class CoreApp {
 	public:
-		CoreApp();
+		CoreApp(int width, int height);
 		~CoreApp();
 
 		void update();
