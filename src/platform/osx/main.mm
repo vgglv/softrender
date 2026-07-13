@@ -15,7 +15,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification {
-	NSRect frame = NSMakeRect(100, 100, 800, 450);
+	NSRect frame = NSMakeRect(100, 100, 1366, 768);
 
 	NSWindow* window = [[NSWindow alloc] initWithContentRect:frame
 												   styleMask:(NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable)

@@ -10,6 +10,7 @@ add_executable(${PROJECT_NAME} src/platform/osx/main.mm)
 file(GLOB_RECURSE SOURCES 
 	"src/common/*.*"
 	"src/core/*.*"
+	"src/objects/*.*"
 	"src/render/*.*"
 	"src/scenes/*.*"
 	"src/state/*.*"

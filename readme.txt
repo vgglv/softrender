@@ -9,3 +9,5 @@ platform window that does a software rendering
 5. scene switches = DONE
 6. separate render from core = DONE
 7. viewport sort of (renders stays in middle when resizing) (macos) = DONE
+8. input handle
+9. render sprite
